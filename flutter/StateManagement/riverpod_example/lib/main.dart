@@ -1,39 +1,62 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_example/counter.dart';
+import 'package:riverpod_example/StateProvider/StateProviderScreen.dart';
 
-// 値（ここでは Counterクラス）を格納する「プロバイダ」を作成します。
-// プロバイダを使うことで値のモックやオーバーライドが可能になります。
-// ChangeNotifierProviderを定義
-final counterProvider = ChangeNotifierProvider((ref) => Counter());
+import 'ChangeNotifierProvider/ChangeNotifierProviderScreen.dart';
 
-void main() {
-  runApp(
-    // プロバイダをウィジェットで利用するには、アプリ全体を
-    // `ProviderScope` ウィジェットで囲む必要があります。
-    // ここに各プロバイダのステート（状態）・値が格納されていきます。
+//現時点では目標設定画面
+Future<void> main() async {
+  return runApp(
     ProviderScope(
       child: MyApp(),
     ),
   );
 }
 
-// StatelessWidget の代わりに Riverpod の ConsumerWidget を継承します。
-class MyApp extends ConsumerWidget {
+/// Represents the MyApp class
+class MyApp extends StatelessWidget {
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // Providerを監視し値を取得するには `watch` を使います。
-    // `Counter` の状態が更新されるとbuildメソッドが再実行され、画面が更新される
-    final counter = ref.watch(counterProvider);
+  Widget build(BuildContext context) {
     return MaterialApp(
-        home: Scaffold(
-      // counter.countインスタンスを文字列に変換して表示
-      body: Center(child: Text(counter.count.toString())),
-      floatingActionButton: FloatingActionButton(
-        // ボタンタップで Counterの `increase()` メソッドを実行
-        onPressed: counter.increase,
-        child: const Icon(Icons.add),
-      ),
-    ));
+      home: MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          elevation: 0.0,
+          backgroundColor: Colors.white10,
+          automaticallyImplyLeading: false,
+        ),
+        body: Center(
+          child: Column(
+            children: <Widget>[
+              ElevatedButton(
+                child: const Text('ChangeNotifierProvider'),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ChangeNotifierProviderScreeen()),
+                  );
+                },
+              ),
+              ElevatedButton(
+                child: const Text('StateProvider'),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => StateProviderScreen()),
+                  );
+                },
+              ),
+            ],
+          ),
+        ));
   }
 }
