@@ -1,8 +1,8 @@
+import 'package:chat_example/model/User.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../model/User.dart';
 import '../utils/FirebaseHelper.dart';
 import 'home_screen.dart';
 
@@ -14,7 +14,6 @@ class AuthScreen extends ConsumerStatefulWidget {
 }
 
 class _AuthScreenState extends ConsumerState<AuthScreen> {
-  FireStoreUtils fireStoreUtils = FireStoreUtils();
   // 入力されたメールアドレス
   String email = "";
   // 入力されたパスワード
@@ -60,23 +59,21 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
               onPressed: () async {
                 try {
                   // メール/パスワードでユーザー登録
-                  final UserCredential result = await FirebaseAuth.instance
-                      .createUserWithEmailAndPassword(
+                  await FirebaseAuth.instance.createUserWithEmailAndPassword(
                     email: email,
                     password: password,
                   );
                   currentUser.userID = FirebaseAuth.instance.currentUser!.uid;
-                  //firestoreに入力した値を追加
-                  await FireStoreUtils.updateCurrentUser(currentUser);
+                  //入力した値をfirestoreに追加
+                  await FireStoreUtils.firebaseCreateNewUser(currentUser);
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const HomeScreen()),
                   );
                 } catch (e) {
-                  // 登録に失敗した場合
                   print(e);
                   setState(() {
-                    infoText = "失敗しました";
+                    infoText = "登録に失敗しました";
                   });
                 }
               },
@@ -85,10 +82,8 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
               child: const Text('ログイン'),
               onPressed: () async {
                 try {
-                  UserCredential userCredential = await FirebaseAuth.instance
-                      .signInWithEmailAndPassword(
-                          email: email, password: password);
-
+                  await FirebaseAuth.instance.signInWithEmailAndPassword(
+                      email: email, password: password);
                   //これでfirestoreから持ってきた値をUserクラスに代入する
                   user.state = (await FireStoreUtils.getCurrentUser(
                       FirebaseAuth.instance.currentUser!.uid))!;
@@ -98,6 +93,9 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                   );
                 } on FirebaseAuthException catch (e) {
                   print(e);
+                  setState(() {
+                    infoText = "ログインに失敗しました";
+                  });
                 }
               },
             ),
