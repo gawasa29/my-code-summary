@@ -1,133 +1,105 @@
 {
-    "Button": {
-        "prefix": "sni button",
-        "body": [
-            "ElevatedButton(",
-            "  child: const Text('Button'),",
-            "  onPressed: () {$1},",
-            "),"
-        ],
-        "description": "Button"
-    },
-    "Navigator": {
-        "prefix": "sni navigator",
-        "body": [
-            "Navigator.push(",
-            "context,",
-            "MaterialPageRoute(builder: (context) => $1),",
-            ");"
-        ],
-        "description": ""
-    },
-    "Scaffold": {
-        "prefix": "sni scaffold",
-        "body": [
-            "Scaffold(",
-            "    appBar: AppBar(),",
-            "    body: Column(",
-            "      children: const <Widget>[],",
-            "    ),",
-            "  )"
-        ],
-        "description": "Scaffold"
-    },
-    "New page": {
-        "prefix": "sni new page",
-        "body": [
-            "import 'package:flutter/material.dart';",
-            "",
-            "class ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g} extends StatelessWidget {",
-            "  const ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}({Key? key}) : super(key: key);",
-            "",
-            "  @override",
-            "  Widget build(BuildContext context) {",
-            "    return Container($1);",
-            "  }",
-            "}"
-        ],
-        "description": "New page"
-    },
-    "New Flutter Project": {
-        "prefix": "sni new project",
-        "body": [
-            "import 'package:flutter/material.dart';",
-            "",
-            "void main() {",
-            "  runApp(const MyApp());",
-            "}",
-            "",
-            "class MyApp extends StatelessWidget {",
-            "  const MyApp({Key? key}) : super(key: key);",
-            "",
-            "  @override",
-            "  Widget build(BuildContext context) {",
-            "    return const MaterialApp(",
-            "      home: MyWidget(),",
-            "    );",
-            "  }",
-            "}",
-            "",
-            "class MyWidget extends StatelessWidget {",
-            "  const MyWidget({Key? key}) : super(key: key);",
-            "",
-            "  @override",
-            "  Widget build(BuildContext context) {",
-            "    return Container();",
-            "  }",
-            "}",
-            ""
-        ],
-        "description": "New Flutter Project"
-    },
-    "repository": {
-        "prefix": "sni repository",
-        "body": [
-            "import 'package:cloud_firestore/cloud_firestore.dart';",
-            "import 'package:firebase_auth/firebase_auth.dart';",
-            "import 'package:flutter_riverpod/flutter_riverpod.dart';",
-            "",
-            "final ${TM_FILENAME_BASE/(.*)/${1:/camelcase}/g}Provider = Provider(",
-            "  (ref) => ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}(",
-            "    auth: FirebaseAuth.instance,",
-            "    firestore: FirebaseFirestore.instance,",
-            "  ),",
-            ");",
-            "",
-            "class ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g} {",
-            "  final FirebaseAuth auth;",
-            "  final FirebaseFirestore firestore;",
-            "  ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}({",
-            "    required this.auth,",
-            "    required this.firestore,",
-            "  });",
-            "}"
-        ],
-        "description": "New repository"
-    },
-    //基本構文は${vscodeが設定した変数/正規表現で検索/検索した値を置き換える/正規表現オプション}
-    //${TM_FILENAME_BASE/_controller//}は。${現在のドキュメントのファイル名を拡張子なしで/_controllerを検索/削除/}
-    "controller": {
-        "prefix": "sni controller",
-        "body": [
-            "import 'package:flutter_riverpod/flutter_riverpod.dart';",
-            "",
-            "",
-            "final  ${TM_FILENAME_BASE/(.*)/${1:/camelcase}/g}Provider = Provider((ref) {",
-            "  final ${TM_FILENAME_BASE/_controller//}Repository = ref.watch(${TM_FILENAME_BASE/_controller//}RepositoryProvider);",
-            "  return ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}(${TM_FILENAME_BASE/_controller//}Repository: ${TM_FILENAME_BASE/_controller//}Repository, ref: ref);",
-            "});",
-            "",
-            "class ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g} {",
-            "  final ${TM_FILENAME_BASE/_controller//}Repository ${TM_FILENAME_BASE/_controller//}Repository;",
-            "  final ProviderRef ref;",
-            "",
-            "  ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}({",
-            "    required this.${TM_FILENAME_BASE/_controller//}Repository,",
-            "    required this.ref,",
-            "  });",
-            "}",
-            ""
-        ],
-        "description": "New controller"
-    }
+	"Button": {
+		"prefix": "sni button",
+		"body": [
+			"ElevatedButton(",
+			"  child: const Text('Button'),",
+			"  onPressed: () {$1},",
+			"),"
+		],
+		"description": "Button"
+	},
+	"Navigator": {
+		"prefix": "sni navigator",
+		"body": [
+			"Navigator.push(",
+			"context,",
+			"MaterialPageRoute(builder: (context) => $1),",
+			");"
+		],
+		"description": ""
+	},
+	"Scaffold": {
+		"prefix": "sni scaffold",
+		"body": [
+			"Scaffold(",
+			"    appBar: AppBar(),",
+			"    body: Column(",
+			"      children: const <Widget>[],",
+			"    ),",
+			"  );"
+		],
+		"description": "Scaffold"
+	},
+	"New page": {
+		"prefix": "new page",
+		"body": [
+			"import 'package:flutter/material.dart';",
+			"",
+			"class ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g} extends StatelessWidget {",
+			"  const ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}({Key? key}) : super(key: key);",
+			"",
+			"  @override",
+			"  Widget build(BuildContext context) {",
+			"    return Container($1);",
+			"  }",
+			"}"
+		],
+		"description": "New page"
+	},
+	"New fanc": {
+		"prefix": "new fanc",
+		"body": [
+			"  ${TM_FILENAME_BASE/(.*)/${1:/camelcase}/g}(){}",
+		],
+		"description": "New fanc"
+	},
+	"repository": {
+		"prefix": "new repository",
+		"body": [
+			"import 'package:cloud_firestore/cloud_firestore.dart';",
+			"import 'package:firebase_auth/firebase_auth.dart';",
+			"import 'package:flutter_riverpod/flutter_riverpod.dart';",
+			"",
+			"final ${TM_FILENAME_BASE/(.*)/${1:/camelcase}/g}Provider = Provider(",
+			"  (ref) => ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}(",
+			"    auth: FirebaseAuth.instance,",
+			"    firestore: FirebaseFirestore.instance,",
+			"  ),",
+			");",
+			"",
+			"class ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g} {",
+			"  final FirebaseAuth auth;",
+			"  final FirebaseFirestore firestore;",
+			"  ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}({",
+			"    required this.auth,",
+			"    required this.firestore,",
+			"  });",
+			"}"
+		],
+		"description": "New repository"
+	},
+	//基本構文は${vscodeが設定した変数/正規表現で検索/検索した値を置き換える/正規表現オプション}
+	//${TM_FILENAME_BASE/_controller//}は。${現在のドキュメントのファイル名を拡張子なしで/_controllerを検索/削除/}
+	"controller": {
+		"prefix": "new controller",
+		"body": [
+			"import 'package:flutter_riverpod/flutter_riverpod.dart';",
+			"",
+			"",
+			"final  ${TM_FILENAME_BASE/(.*)/${1:/camelcase}/g}Provider = Provider((ref) {",
+			"  return ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}(ref: ref);",
+			"});",
+			"",
+			"class ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g} {",
+			"  final ProviderRef ref;",
+			"",
+			"  ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}({",
+			"    required this.ref,",
+			"  });",
+			"}",
+			""
+		],
+		"description": "New controller"
+	},
 }
