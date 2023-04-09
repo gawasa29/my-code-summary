@@ -44,6 +44,19 @@ class MarvelRepository {
     return result;
   }
 
+  Future<Character> fetchCharacter({
+    required String id,
+  }) async {
+    // Don't fetch the Character if it was already obtained previously, either
+    // in the home page or in the detail page.
+    if (_characterCache.containsKey(id)) {
+      return _characterCache[id]!;
+    }
+
+    final response = await _get('characters/$id');
+    return Character.fromJson(response.data.results.single);
+  }
+
   Future<MarvelResponse> _get(
     String path, {
     Map<String, Object?>? queryParameters,

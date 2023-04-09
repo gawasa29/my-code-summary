@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../API/marvel.dart';
 import '../widgets/loading_image.dart';
 import '../widgets/marvel_logo.dart';
+import 'character_detail.dart';
 
 const kCharactersPageLimit = 50;
 
@@ -80,8 +81,13 @@ class CharacterItem extends ConsumerWidget {
       data: (character) {
         return GestureDetector(
           onTap: () {
-            //TODO画面遷移後のキャラクターページ作成
-            print(character.thumbnail.url);
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => CharacterView(
+                  selectedCharacterId: character.id.toString(),
+                ),
+              ),
+            );
           },
           //XXXここがキャラクターのカードのところ
           child: Card(
