@@ -2,12 +2,16 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
+import 'firebase_options.dart';
 import 'login.dart';
 
 void main() async {
 //クラウドファイアストアのやつ
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+//flutterfire_cliで追加されたfirebase_options.dartのためにいる。
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   // FCM の通知権限リクエスト
   final messaging = FirebaseMessaging.instance;
   await messaging.requestPermission(
@@ -36,6 +40,8 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
