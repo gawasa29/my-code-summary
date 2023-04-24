@@ -1,0 +1,50 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ユーザーが認証済みであるかどうかを判断する関数
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    // 渡されたユーザーIDが認証済みであるかどうかを判断する関数
+    function isUserAuthenticated(userId) {
+      return isAuthenticated() && userId == request.auth.uid;
+    }
+    // Createのユーザーデータのスキーマ検証
+    function isValidCreateUser(tmp) {
+      return tmp.size() == 7
+        && tmp.keys().hasAll(['name', 'userId', 'bio', 'profilePic', 'followerNum', 'followingNum', 'createdAt'])
+        && tmp.name is string && (tmp.name.size() > 0 && tmp.name.size() <= 10)
+        && tmp.userId is string && (tmp.userId.size() > 0 && tmp.userId.size() <= 100)
+        && tmp.bio is string && (tmp.bio.size() <= 100)
+        && tmp.profilePic is string
+        && tmp.followerNum is int && (tmp.followerNum < 1)
+        && tmp.followingNum is int && (tmp.followingNum < 1);
+    }
+    // Updateのユーザーデータのスキーマ検証
+    function isValidUpdateUser(tmp) {
+      return tmp.diff(resource.data).affectedKeys().hasOnly(['name', 'bio', 'profilePic'])
+        && tmp.name is string && (tmp.name.size() > 0 && tmp.name.size() <= 10)
+        && tmp.bio is string && (tmp.bio.size() <= 100)
+        && tmp.profilePic is string;
+    }
+    // Userコレクションに対するルール
+    match /users/{userID} {
+      allow read: if isAuthenticated();
+      // ユーザーIDが認証済みで、データが正しいスキーマに従っている場合のみ、Userコレクションの作成を許可する
+      allow create: if isUserAuthenticated(userID)
+        && isValidCreateUser(request.resource.data);
+
+      allow update: if isUserAuthenticated(userID)
+        && isValidUpdateUser(request.resource.data);
+
+      allow delete: if isUserAuthenticated(userID);
+
+      // PrivateInfoコレクションに対するルール
+      match /privateInfo/{documentID} {
+        // 認証されたユーザーのみ作成・削除を許可する
+        allow create: if isUserAuthenticated(userID);
+        allow delete: if isUserAuthenticated(userID);
+      }
+    }
+  }
+}
