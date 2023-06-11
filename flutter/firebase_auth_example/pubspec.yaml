@@ -1,0 +1,33 @@
+name: firebase_auth_example
+description: A new Flutter project.
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=3.0.3 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  ###  Firebase  ###
+  cloud_firestore: any
+  firebase_auth: any
+  firebase_core: any
+  google_sign_in: any
+  ###  State Management  ###
+  flutter_riverpod: any
+  ###  routing  ###
+  go_router: any
+  ###  UI/UX  ###
+  fluttertoast: any
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  integration_test:
+    sdk: flutter
+  very_good_analysis: ^5.0.0+1
+
+flutter:
+  uses-material-design: true
