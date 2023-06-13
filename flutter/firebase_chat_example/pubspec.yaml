@@ -1,0 +1,33 @@
+name: firebase_chat_example
+description: A new Flutter project.
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=3.0.3 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  ###  Firebase  ###
+  cloud_firestore: any
+  firebase_core: any
+  ###  State Management  ###
+  flutter_riverpod: any
+  freezed_annotation: any
+  json_serializable: any
+  ###  routing  ###
+  go_router: any
+  ###  UI/UX  ###
+  badges: any
+  flutterfire_ui: any
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+  very_good_analysis: ^5.0.0+1
+  build_runner: any
+  freezed: any
+flutter:
+  uses-material-design: true
