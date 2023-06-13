@@ -4,6 +4,7 @@ import 'package:firebase_chat_example/features/user/repo/refs/auth_refs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterfire_ui/firestore.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../common/extensions/date_time.dart';
 import '../../user/query/user_query.dart';
@@ -239,17 +240,30 @@ class _MessageContentWidget extends ConsumerWidget {
           bottomLeft: Radius.circular(isMyMessage ? 8 : 0),
           bottomRight: Radius.circular(isMyMessage ? 0 : 8),
         ),
-        color: isMyMessage ? Theme.of(context).primaryColor : Colors.green,
+        color: isMyMessage ? Colors.red : Colors.green,
       ),
-      child: Text(
-        message.content,
-        style: isMyMessage
-            ? Theme.of(context)
-                .textTheme
-                .bodySmall!
-                .copyWith(color: Colors.white)
-            : Theme.of(context).textTheme.bodySmall,
-      ),
+      child: findUrl(message.content)
+          ? TextButton(
+              child: Text(
+                message.content,
+                style: const TextStyle(
+                  decoration: TextDecoration.underline,
+                ),
+              ),
+              onPressed: () {
+                final url = Uri.parse(extractUrls(message.content));
+                launchUrl(url);
+              },
+            )
+          : Text(
+              message.content,
+              style: isMyMessage
+                  ? Theme.of(context)
+                      .textTheme
+                      .bodySmall!
+                      .copyWith(color: Colors.white)
+                  : Theme.of(context).textTheme.bodySmall,
+            ),
     );
   }
 }
@@ -303,4 +317,55 @@ class MessageInputController {
       return controller;
     }
   }
+}
+
+// String splittingMessage(String message) {
+//   final RegExp urlRegExp = RegExp(
+//       r'((https?:\/\/)|(www\.))[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-zA-Z0-9()]{2,6}\b([-a-zA-Z0-9()@:%_\+.~#?&\/=]*)?');
+//   final Iterable<RegExpMatch> urlMatches = urlRegExp.allMatches(message);
+
+//   final List<String> splittingMessage = <String>[];
+//   int lastIndex = 0;
+
+//   for (RegExpMatch urlMatch in urlMatches) {
+//     final String url = message.substring(urlMatch.start, urlMatch.end);
+//     final String precedingText =
+//         message.substring(lastIndex, urlMatch.start).trim();
+
+//     if (precedingText.isNotEmpty) {
+//       splittingMessage.add(precedingText);
+//     }
+//     splittingMessage.add(url);
+//     lastIndex = urlMatch.end;
+//   }
+
+//   final String remainingText = message.substring(lastIndex).trim();
+//   if (remainingText.isNotEmpty) {
+//     splittingMessage.add(remainingText);
+//   }
+
+//   return splittingMessage.join('\n');
+// }
+
+bool findUrl(String message) {
+  final RegExp urlRegExp = RegExp(
+      r'((https?:\/\/)|(www\.))[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-zA-Z0-9()]{2,6}\b([-a-zA-Z0-9()@:%_\+.~#?&\/=]*)?');
+
+  // 正規表現に一致するものがメッセージ内に存在するかどうかを返す
+  return urlRegExp.hasMatch(message);
+}
+
+String extractUrls(String message) {
+  final RegExp urlRegExp = RegExp(
+      r'((https?:\/\/)|(www\.))[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-zA-Z0-9()]{2,6}\b([-a-zA-Z0-9()@:%_\+.~#?&\/=]*)?');
+
+  final Iterable<RegExpMatch> urlMatches = urlRegExp.allMatches(message);
+
+  // URLを抽出し、それらをリストに変換します。
+  List<String> urls = urlMatches
+      .map((urlMatch) => message.substring(urlMatch.start, urlMatch.end))
+      .toList();
+
+  // URLリストを改行で区切った一つの文字列に変換して返す
+  return urls.join('\n');
 }
