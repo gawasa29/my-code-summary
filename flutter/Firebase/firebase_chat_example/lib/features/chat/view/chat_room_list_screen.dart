@@ -30,7 +30,9 @@ class ChatRoomListScreen extends StatelessWidget {
               onTap: () {
                 context.goNamed(
                   ChatRoomScreen.routeName,
-                  pathParameters: <String, String>{'userId': room.chatRoomId},
+                  pathParameters: <String, String>{
+                    'receiverUserId': room.chatRoomId,
+                  },
                 );
               },
               child: Padding(

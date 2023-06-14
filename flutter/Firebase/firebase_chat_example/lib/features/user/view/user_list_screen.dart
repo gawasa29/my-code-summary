@@ -36,7 +36,9 @@ class UserListScreen extends ConsumerWidget {
                   onPressed: () {
                     context.goNamed(
                       ChatRoomScreen.routeName,
-                      pathParameters: <String, String>{'userId': user.userId},
+                      pathParameters: <String, String>{
+                        'receiverUserId': user.userId
+                      },
                     );
                   },
                 ),

@@ -22,11 +22,11 @@ class ChatCommand extends AsyncNotifier<void> {
 
   Future<void> sendEvent({
     required String content,
-    required String receiverId,
+    required String receiverUserId,
     required int? messageCount,
   }) async {
     final currentUid = authRef.currentUser!.uid;
-    final receiverUser = await userDocRef(userId: receiverId).get();
+    final receiverUser = await userDocRef(userId: receiverUserId).get();
     final senderUser = await userDocRef(userId: currentUid).get();
 
     // messageCountがnullのとき0を代入、他は何もしない。
@@ -41,7 +41,7 @@ class ChatCommand extends AsyncNotifier<void> {
     );
     //自分の
     final senderChatRoom = ChatRoomEntity(
-      chatRoomId: receiverId,
+      chatRoomId: receiverUserId,
       chatUserName: receiverUser.data()!.name,
       lastMessage: content,
       messageCount: 0,
@@ -50,14 +50,14 @@ class ChatCommand extends AsyncNotifier<void> {
     state = await AsyncValue.guard(() async {
       return await createChatRoom(
         receiverChatRoom: receiverChatRoom,
-        receiverUserId: receiverId,
+        receiverUserId: receiverUserId,
         senderChatRoom: senderChatRoom,
         senderUserId: currentUid,
       );
     });
     final message = MessageEntity(
       content: content,
-      receiverId: receiverId,
+      receiverId: receiverUserId,
       senderId: currentUid,
     );
     state = const AsyncLoading();
@@ -65,8 +65,8 @@ class ChatCommand extends AsyncNotifier<void> {
       () async {
         return await sendMessage(
           message: message,
-          receiverId: receiverId,
-          senderId: currentUid,
+          receiverUserId: receiverUserId,
+          senderUserId: currentUid,
         );
       },
     );

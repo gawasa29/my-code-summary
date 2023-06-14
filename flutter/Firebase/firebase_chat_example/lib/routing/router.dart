@@ -31,11 +31,12 @@ final routerProvider = Provider(
               routes: [
                 GoRoute(
                   parentNavigatorKey: ref.watch(rootNavigatorKey),
-                  path: 'ChatRoom/:userId',
+                  path: 'ChatRoom/:receiverUserId',
                   name: ChatRoomScreen.routeName,
                   builder: (context, state) {
-                    final userId = state.pathParameters['userId']!;
-                    return ChatRoomScreen(userId: userId);
+                    final receiverUserId =
+                        state.pathParameters['receiverUserId']!;
+                    return ChatRoomScreen(receiverUserId: receiverUserId);
                   },
                 ),
               ],

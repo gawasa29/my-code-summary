@@ -4,12 +4,14 @@ import 'refs/chat_refs.dart';
 
 Future<void> sendMessage({
   required MessageEntity message,
-  required String receiverId,
-  required String senderId,
+  required String receiverUserId,
+  required String senderUserId,
 }) async {
   print('🐯 sendMessage Now !!!');
   // 自分のメッセージ作成
-  await messagesDocRef(userId: senderId, chatRoomId: receiverId).set(message);
+  await messagesDocRef(userId: senderUserId, chatRoomId: receiverUserId)
+      .set(message);
   // 相手のメッセージ作成
-  await messagesDocRef(userId: receiverId, chatRoomId: senderId).set(message);
+  await messagesDocRef(userId: receiverUserId, chatRoomId: senderUserId)
+      .set(message);
 }

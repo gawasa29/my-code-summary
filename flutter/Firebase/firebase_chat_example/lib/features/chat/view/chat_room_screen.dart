@@ -15,9 +15,9 @@ import '../repo/refs/chat_refs.dart';
 class ChatRoomScreen extends ConsumerStatefulWidget {
   const ChatRoomScreen({
     super.key,
-    required this.userId,
+    required this.receiverUserId,
   });
-  final String userId;
+  final String receiverUserId;
   static const routeName = 'ChatRoom';
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ChatRoomScreenState();
@@ -29,7 +29,7 @@ class _ChatRoomScreenState extends ConsumerState<ChatRoomScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref
           .read(chatAsyncNotifierCommand.notifier)
-          .markAsReadEvent(receiverUserId: widget.userId);
+          .markAsReadEvent(receiverUserId: widget.receiverUserId);
     });
 
     super.initState();
@@ -46,7 +46,7 @@ class _ChatRoomScreenState extends ConsumerState<ChatRoomScreen> {
               pageSize: 30,
               query: messagesRef(
                       userId: authRef.currentUser!.uid,
-                      chatRoomId: widget.userId)
+                      chatRoomId: widget.receiverUserId)
                   .orderBy('createdAt', descending: true),
               builder: (context, snapshot, _) {
                 if (snapshot.isFetching) {
@@ -83,7 +83,7 @@ class _ChatRoomScreenState extends ConsumerState<ChatRoomScreen> {
               },
             ),
           ),
-          _RoomMessageInput(userId: widget.userId),
+          _RoomMessageInput(receiverUserId: widget.receiverUserId),
           Container(
             height: MediaQuery.of(context).padding.bottom,
           ),
@@ -118,18 +118,18 @@ bool _showDate({
 
 class _RoomMessageInput extends ConsumerWidget {
   const _RoomMessageInput({
-    required this.userId,
+    required this.receiverUserId,
   });
 
-  final String userId;
+  final String receiverUserId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final userController = ref.watch(messageInputControllerProvider);
-    final textController = userController.getController(userId);
+    final textController = userController.getController(receiverUserId);
     final chatCommand = ref.read(chatAsyncNotifierCommand.notifier);
-    final chatCount = ref.watch(
-        chatRoomProvider(userId).select((value) => value.value?.messageCount));
+    final chatCount = ref.watch(chatRoomProvider(receiverUserId)
+        .select((value) => value.value?.messageCount));
     return Row(
       children: [
         IconButton(
@@ -154,7 +154,7 @@ class _RoomMessageInput extends ConsumerWidget {
             if (textController.text != '') {
               chatCommand.sendEvent(
                 content: textController.text.trim(),
-                receiverId: userId,
+                receiverUserId: receiverUserId,
                 messageCount: chatCount,
               );
               textController.clear();
