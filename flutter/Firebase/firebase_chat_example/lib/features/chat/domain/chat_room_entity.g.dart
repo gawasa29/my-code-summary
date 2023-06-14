@@ -11,6 +11,7 @@ _$_ChatRoomEntity _$$_ChatRoomEntityFromJson(Map<String, dynamic> json) =>
       chatRoomId: json['chatRoomId'] as String,
       chatUserName: json['chatUserName'] as String,
       lastMessage: json['lastMessage'] as String,
+      messageCount: json['messageCount'] as int? ?? 0,
       createdAt: json['createdAt'] == null
           ? const UnionTimestamp.serverTimestamp()
           : alwaysUseServerTimestampUnionTimestampConverter
@@ -26,6 +27,7 @@ Map<String, dynamic> _$$_ChatRoomEntityToJson(_$_ChatRoomEntity instance) =>
       'chatRoomId': instance.chatRoomId,
       'chatUserName': instance.chatUserName,
       'lastMessage': instance.lastMessage,
+      'messageCount': instance.messageCount,
       'createdAt': alwaysUseServerTimestampUnionTimestampConverter
           .toJson(instance.createdAt),
       'updatedAt': alwaysUseServerTimestampUnionTimestampConverter

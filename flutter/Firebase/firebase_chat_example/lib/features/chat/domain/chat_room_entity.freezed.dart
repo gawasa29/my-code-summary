@@ -23,6 +23,7 @@ mixin _$ChatRoomEntity {
   String get chatRoomId => throw _privateConstructorUsedError;
   String get chatUserName => throw _privateConstructorUsedError;
   String get lastMessage => throw _privateConstructorUsedError;
+  int get messageCount => throw _privateConstructorUsedError;
   @alwaysUseServerTimestampUnionTimestampConverter
   UnionTimestamp get createdAt => throw _privateConstructorUsedError;
   @alwaysUseServerTimestampUnionTimestampConverter
@@ -44,6 +45,7 @@ abstract class $ChatRoomEntityCopyWith<$Res> {
       {String chatRoomId,
       String chatUserName,
       String lastMessage,
+      int messageCount,
       @alwaysUseServerTimestampUnionTimestampConverter
           UnionTimestamp createdAt,
       @alwaysUseServerTimestampUnionTimestampConverter
@@ -69,6 +71,7 @@ class _$ChatRoomEntityCopyWithImpl<$Res, $Val extends ChatRoomEntity>
     Object? chatRoomId = null,
     Object? chatUserName = null,
     Object? lastMessage = null,
+    Object? messageCount = null,
     Object? createdAt = null,
     Object? updatedAt = null,
   }) {
@@ -85,6 +88,10 @@ class _$ChatRoomEntityCopyWithImpl<$Res, $Val extends ChatRoomEntity>
           ? _value.lastMessage
           : lastMessage // ignore: cast_nullable_to_non_nullable
               as String,
+      messageCount: null == messageCount
+          ? _value.messageCount
+          : messageCount // ignore: cast_nullable_to_non_nullable
+              as int,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -125,6 +132,7 @@ abstract class _$$_ChatRoomEntityCopyWith<$Res>
       {String chatRoomId,
       String chatUserName,
       String lastMessage,
+      int messageCount,
       @alwaysUseServerTimestampUnionTimestampConverter
           UnionTimestamp createdAt,
       @alwaysUseServerTimestampUnionTimestampConverter
@@ -150,6 +158,7 @@ class __$$_ChatRoomEntityCopyWithImpl<$Res>
     Object? chatRoomId = null,
     Object? chatUserName = null,
     Object? lastMessage = null,
+    Object? messageCount = null,
     Object? createdAt = null,
     Object? updatedAt = null,
   }) {
@@ -166,6 +175,10 @@ class __$$_ChatRoomEntityCopyWithImpl<$Res>
           ? _value.lastMessage
           : lastMessage // ignore: cast_nullable_to_non_nullable
               as String,
+      messageCount: null == messageCount
+          ? _value.messageCount
+          : messageCount // ignore: cast_nullable_to_non_nullable
+              as int,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -187,6 +200,7 @@ class _$_ChatRoomEntity
       {required this.chatRoomId,
       required this.chatUserName,
       required this.lastMessage,
+      this.messageCount = 0,
       @alwaysUseServerTimestampUnionTimestampConverter
           this.createdAt = const UnionTimestamp.serverTimestamp(),
       @alwaysUseServerTimestampUnionTimestampConverter
@@ -203,6 +217,9 @@ class _$_ChatRoomEntity
   final String lastMessage;
   @override
   @JsonKey()
+  final int messageCount;
+  @override
+  @JsonKey()
   @alwaysUseServerTimestampUnionTimestampConverter
   final UnionTimestamp createdAt;
   @override
@@ -212,7 +229,7 @@ class _$_ChatRoomEntity
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ChatRoomEntity(chatRoomId: $chatRoomId, chatUserName: $chatUserName, lastMessage: $lastMessage, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'ChatRoomEntity(chatRoomId: $chatRoomId, chatUserName: $chatUserName, lastMessage: $lastMessage, messageCount: $messageCount, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -223,6 +240,7 @@ class _$_ChatRoomEntity
       ..add(DiagnosticsProperty('chatRoomId', chatRoomId))
       ..add(DiagnosticsProperty('chatUserName', chatUserName))
       ..add(DiagnosticsProperty('lastMessage', lastMessage))
+      ..add(DiagnosticsProperty('messageCount', messageCount))
       ..add(DiagnosticsProperty('createdAt', createdAt))
       ..add(DiagnosticsProperty('updatedAt', updatedAt));
   }
@@ -238,6 +256,8 @@ class _$_ChatRoomEntity
                 other.chatUserName == chatUserName) &&
             (identical(other.lastMessage, lastMessage) ||
                 other.lastMessage == lastMessage) &&
+            (identical(other.messageCount, messageCount) ||
+                other.messageCount == messageCount) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -246,8 +266,8 @@ class _$_ChatRoomEntity
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, chatRoomId, chatUserName, lastMessage, createdAt, updatedAt);
+  int get hashCode => Object.hash(runtimeType, chatRoomId, chatUserName,
+      lastMessage, messageCount, createdAt, updatedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -268,6 +288,7 @@ abstract class _ChatRoomEntity implements ChatRoomEntity {
       {required final String chatRoomId,
       required final String chatUserName,
       required final String lastMessage,
+      final int messageCount,
       @alwaysUseServerTimestampUnionTimestampConverter
           final UnionTimestamp createdAt,
       @alwaysUseServerTimestampUnionTimestampConverter
@@ -282,6 +303,8 @@ abstract class _ChatRoomEntity implements ChatRoomEntity {
   String get chatUserName;
   @override
   String get lastMessage;
+  @override
+  int get messageCount;
   @override
   @alwaysUseServerTimestampUnionTimestampConverter
   UnionTimestamp get createdAt;

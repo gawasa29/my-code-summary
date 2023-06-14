@@ -14,6 +14,7 @@ class ChatRoomEntity with _$ChatRoomEntity {
     required String chatRoomId,
     required String chatUserName,
     required String lastMessage,
+    @Default(0) int messageCount,
     @alwaysUseServerTimestampUnionTimestampConverter
     @Default(UnionTimestamp.serverTimestamp())
     UnionTimestamp createdAt,

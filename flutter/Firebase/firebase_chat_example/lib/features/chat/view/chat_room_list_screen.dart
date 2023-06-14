@@ -26,19 +26,42 @@ class ChatRoomListScreen extends StatelessWidget {
           itemBuilder: (BuildContext context,
               QueryDocumentSnapshot<ChatRoomEntity> doc) {
             final room = doc.data();
-            return Card(
-              child: ListTile(
-                title: Text(room.chatUserName),
-                trailing: IconButton(
-                  icon: const Icon(Icons.chat),
-                  onPressed: () {
-                    context.goNamed(
-                      ChatRoomScreen.routeName,
-                      pathParameters: <String, String>{
-                        'userId': room.chatRoomId
-                      },
-                    );
-                  },
+            return InkWell(
+              onTap: () {
+                context.goNamed(
+                  ChatRoomScreen.routeName,
+                  pathParameters: <String, String>{'userId': room.chatRoomId},
+                );
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Flexible(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            room.chatUserName,
+                            style: const TextStyle(
+                                fontSize: 21, fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            room.lastMessage,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          ),
+                          (room.messageCount == 0)
+                              ? const SizedBox()
+                              : Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Badge.count(count: room.messageCount),
+                                )
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             );

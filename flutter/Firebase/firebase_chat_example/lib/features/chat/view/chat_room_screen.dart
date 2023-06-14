@@ -9,6 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../common/extensions/date_time.dart';
 import '../../user/query/user_query.dart';
 import '../command/chat_command.dart';
+import '../query/chat_query.dart';
 import '../repo/refs/chat_refs.dart';
 
 class ChatRoomScreen extends ConsumerStatefulWidget {
@@ -23,7 +24,17 @@ class ChatRoomScreen extends ConsumerStatefulWidget {
 }
 
 class _ChatRoomScreenState extends ConsumerState<ChatRoomScreen> {
-  DateTime lastDate = DateTime.now();
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref
+          .read(chatAsyncNotifierCommand.notifier)
+          .markAsReadEvent(receiverUserId: widget.userId);
+    });
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -116,7 +127,9 @@ class _RoomMessageInput extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final userController = ref.watch(messageInputControllerProvider);
     final textController = userController.getController(userId);
-    final chatCommand = ref.watch(chatAsyncNotifierCommand.notifier);
+    final chatCommand = ref.read(chatAsyncNotifierCommand.notifier);
+    final chatCount = ref.watch(
+        chatRoomProvider(userId).select((value) => value.value?.messageCount));
     return Row(
       children: [
         IconButton(
@@ -142,6 +155,7 @@ class _RoomMessageInput extends ConsumerWidget {
               chatCommand.sendEvent(
                 content: textController.text.trim(),
                 receiverId: userId,
+                messageCount: chatCount,
               );
               textController.clear();
             }
