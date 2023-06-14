@@ -1,0 +1,39 @@
+name: firebase_hashhtag_example
+description: A new Flutter project.
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=3.0.3 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  ###  Firebase  ###
+  firebase_core: any
+  cloud_firestore: any
+  firebase_auth: any
+  ###  State Management  ###
+  flutter_riverpod: any
+  freezed_annotation: any
+  json_serializable: any
+  ###  routing  ###
+  go_router: any
+  ###  hashtag  ###
+  detectable_text_field: any
+
+  flutterfire_ui: any
+
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  integration_test:
+    sdk: flutter
+  very_good_analysis: ^5.0.0+1
+  build_runner: any
+  freezed: any
+
+flutter:
+  uses-material-design: true
