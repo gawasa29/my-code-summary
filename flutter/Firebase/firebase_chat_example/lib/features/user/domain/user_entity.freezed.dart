@@ -22,6 +22,7 @@ UserEntity _$UserEntityFromJson(Map<String, dynamic> json) {
 mixin _$UserEntity {
   String get name => throw _privateConstructorUsedError;
   String get userId => throw _privateConstructorUsedError;
+  String get fcmToken => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +36,7 @@ abstract class $UserEntityCopyWith<$Res> {
           UserEntity value, $Res Function(UserEntity) then) =
       _$UserEntityCopyWithImpl<$Res, UserEntity>;
   @useResult
-  $Res call({String name, String userId});
+  $Res call({String name, String userId, String fcmToken});
 }
 
 /// @nodoc
@@ -53,6 +54,7 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
   $Res call({
     Object? name = null,
     Object? userId = null,
+    Object? fcmToken = null,
   }) {
     return _then(_value.copyWith(
       name: null == name
@@ -62,6 +64,10 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
       userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
+              as String,
+      fcmToken: null == fcmToken
+          ? _value.fcmToken
+          : fcmToken // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -75,7 +81,7 @@ abstract class _$$_UserEntityCopyWith<$Res>
       __$$_UserEntityCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name, String userId});
+  $Res call({String name, String userId, String fcmToken});
 }
 
 /// @nodoc
@@ -91,6 +97,7 @@ class __$$_UserEntityCopyWithImpl<$Res>
   $Res call({
     Object? name = null,
     Object? userId = null,
+    Object? fcmToken = null,
   }) {
     return _then(_$_UserEntity(
       name: null == name
@@ -101,6 +108,10 @@ class __$$_UserEntityCopyWithImpl<$Res>
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String,
+      fcmToken: null == fcmToken
+          ? _value.fcmToken
+          : fcmToken // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -108,7 +119,8 @@ class __$$_UserEntityCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_UserEntity with DiagnosticableTreeMixin implements _UserEntity {
-  const _$_UserEntity({required this.name, required this.userId});
+  const _$_UserEntity(
+      {required this.name, required this.userId, required this.fcmToken});
 
   factory _$_UserEntity.fromJson(Map<String, dynamic> json) =>
       _$$_UserEntityFromJson(json);
@@ -117,10 +129,12 @@ class _$_UserEntity with DiagnosticableTreeMixin implements _UserEntity {
   final String name;
   @override
   final String userId;
+  @override
+  final String fcmToken;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'UserEntity(name: $name, userId: $userId)';
+    return 'UserEntity(name: $name, userId: $userId, fcmToken: $fcmToken)';
   }
 
   @override
@@ -129,7 +143,8 @@ class _$_UserEntity with DiagnosticableTreeMixin implements _UserEntity {
     properties
       ..add(DiagnosticsProperty('type', 'UserEntity'))
       ..add(DiagnosticsProperty('name', name))
-      ..add(DiagnosticsProperty('userId', userId));
+      ..add(DiagnosticsProperty('userId', userId))
+      ..add(DiagnosticsProperty('fcmToken', fcmToken));
   }
 
   @override
@@ -138,12 +153,14 @@ class _$_UserEntity with DiagnosticableTreeMixin implements _UserEntity {
         (other.runtimeType == runtimeType &&
             other is _$_UserEntity &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.userId, userId) || other.userId == userId));
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.fcmToken, fcmToken) ||
+                other.fcmToken == fcmToken));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, name, userId);
+  int get hashCode => Object.hash(runtimeType, name, userId, fcmToken);
 
   @JsonKey(ignore: true)
   @override
@@ -162,7 +179,8 @@ class _$_UserEntity with DiagnosticableTreeMixin implements _UserEntity {
 abstract class _UserEntity implements UserEntity {
   const factory _UserEntity(
       {required final String name,
-      required final String userId}) = _$_UserEntity;
+      required final String userId,
+      required final String fcmToken}) = _$_UserEntity;
 
   factory _UserEntity.fromJson(Map<String, dynamic> json) =
       _$_UserEntity.fromJson;
@@ -171,6 +189,8 @@ abstract class _UserEntity implements UserEntity {
   String get name;
   @override
   String get userId;
+  @override
+  String get fcmToken;
   @override
   @JsonKey(ignore: true)
   _$$_UserEntityCopyWith<_$_UserEntity> get copyWith =>

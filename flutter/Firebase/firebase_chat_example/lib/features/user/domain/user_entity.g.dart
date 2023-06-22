@@ -10,10 +10,12 @@ _$_UserEntity _$$_UserEntityFromJson(Map<String, dynamic> json) =>
     _$_UserEntity(
       name: json['name'] as String,
       userId: json['userId'] as String,
+      fcmToken: json['fcmToken'] as String,
     );
 
 Map<String, dynamic> _$$_UserEntityToJson(_$_UserEntity instance) =>
     <String, dynamic>{
       'name': instance.name,
       'userId': instance.userId,
+      'fcmToken': instance.fcmToken,
     };

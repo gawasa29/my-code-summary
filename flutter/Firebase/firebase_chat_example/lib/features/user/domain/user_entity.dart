@@ -11,6 +11,7 @@ class UserEntity with _$UserEntity {
   const factory UserEntity({
     required String name,
     required String userId,
+    required String fcmToken,
   }) = _UserEntity;
 
   factory UserEntity.fromJson(Map<String, dynamic> json) =>

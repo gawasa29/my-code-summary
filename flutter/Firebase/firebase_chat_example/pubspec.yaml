@@ -12,6 +12,8 @@ dependencies:
   ###  Firebase  ###
   cloud_firestore: any
   firebase_core: any
+  cloud_functions: any
+  firebase_messaging: any
   ###  State Management  ###
   flutter_riverpod: any
   freezed_annotation: any
@@ -23,6 +25,7 @@ dependencies:
   flutterfire_ui: any
   ###  URL  ###
   url_launcher: any
+
 
 dev_dependencies:
   flutter_test:

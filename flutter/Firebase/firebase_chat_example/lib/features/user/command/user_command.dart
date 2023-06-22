@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_chat_example/common/firebase/firebase_messaging.dart';
 import 'package:firebase_chat_example/features/user/repo/refs/auth_refs.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -19,7 +20,13 @@ class UserCommand extends AsyncNotifier<void> {
   Future<void> createUserEvent({
     required String name,
   }) async {
-    UserEntity user = UserEntity(name: name, userId: authRef.currentUser!.uid);
+    final fcmToken = await messagingRef.getToken();
+
+    UserEntity user = UserEntity(
+      name: name,
+      userId: authRef.currentUser!.uid,
+      fcmToken: fcmToken!,
+    );
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
       return await createUser(user);
