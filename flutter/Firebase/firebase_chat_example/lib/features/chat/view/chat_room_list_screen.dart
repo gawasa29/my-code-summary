@@ -18,7 +18,8 @@ class ChatRoomListScreen extends StatelessWidget {
           title: const Text('ChatRoomList'),
         ),
         body: FirestoreListView(
-          query: chatRoomRef(userId: authRef.currentUser!.uid),
+          query: chatRoomRef(userId: authRef.currentUser!.uid)
+              .orderBy('updatedAt', descending: true),
           errorBuilder: (context, error, stackTrace) =>
               Center(child: Text(error.toString())),
           loadingBuilder: (context) =>
