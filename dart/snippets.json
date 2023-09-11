@@ -1,105 +1,297 @@
-{
-	"Button": {
-		"prefix": "sni button",
-		"body": [
-			"ElevatedButton(",
-			"  child: const Text('Button'),",
-			"  onPressed: () {$1},",
-			"),"
-		],
-		"description": "Button"
-	},
-	"Navigator": {
-		"prefix": "sni navigator",
-		"body": [
-			"Navigator.push(",
-			"context,",
-			"MaterialPageRoute(builder: (context) => $1),",
-			");"
-		],
-		"description": ""
-	},
-	"Scaffold": {
-		"prefix": "sni scaffold",
-		"body": [
-			"Scaffold(",
-			"    appBar: AppBar(),",
-			"    body: Column(",
-			"      children: const <Widget>[],",
-			"    ),",
-			"  );"
-		],
-		"description": "Scaffold"
-	},
-	"New page": {
-		"prefix": "new page",
-		"body": [
-			"import 'package:flutter/material.dart';",
+
+    //基本構文は${vscodeが設定した変数/正規表現で検索/検索した値を置き換える/正規表現オプション}
+    //${TM_FILENAME_BASE/_controller//}は。${現在のドキュメントのファイル名を拡張子なしで/_controllerを検索/削除/}
+
+
+	{
+		"Button": {
+			"prefix": "sni button",
+			"body": [
+				"ElevatedButton(",
+				"  onPressed: () {$1},",
+				"  child: const Text('Button'),",
+				"),"
+			],
+			"description": "Button"
+		},
+		"Navigator push": {
+			"prefix": "sni navigator push",
+			"body": ["Navigator.push(context, MaterialPageRoute(builder: (context) => $1));"],
+			"description": ""
+		},
+		"Navigator pushAndRemoveUntil": {
+			"prefix": "sni navigator pushAndRemoveUntil",
+			"body": ["Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => $1), (Route<dynamic> route) => false);"],
+			"description": ""
+		},
+		"Navigator pop": {
+			"prefix": "sni navigator pop",
+			"body": ["Navigator.pop(context);"],
+			"description": ""
+		},
+		"Scaffold": {
+			"prefix": "sni scaffold",
+			"body": [
+				"return Scaffold(",
+				"  appBar: AppBar(),",
+				"  body: Column(",
+				"    children: [ Text('Hello World!'),],",
+				"  ),",
+				");"
+			],
+			"description": "Scaffold"
+		},
+		"Expanded": {
+			"prefix": "sni expanded",
+			"body": ["Expanded(child: Container(color: Colors.red)),",],
+			"description": ""
+		},
+		"FutureBuilder": {
+		  "prefix": "sni futureBuilder",
+		  "body": [
+			"FutureBuilder(",
+			"        future: Future.value(),",
+			"        builder: (context, snapshot) {",
+			"          if (snapshot.connectionState != ConnectionState.done) {",
+			"            return const Center(child: CircularProgressIndicator());",
+			"          }",
 			"",
-			"class ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g} extends StatelessWidget {",
-			"  const ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}({Key? key}) : super(key: key);",
+			"          if (snapshot.hasError) {",
+			"            return Text('Error: ${snapshot.error}');",
+			"          }",
 			"",
-			"  @override",
-			"  Widget build(BuildContext context) {",
-			"    return Container($1);",
+			"          if (!snapshot.hasData) {",
+			"            return const Text('No Data');",
+			"          }",
+			"",
+			"          final test = snapshot.data!;",
+			"          return const Text('Data: test');",
+			"        },",
+			"      )"
+		  ],
+		  "description": ""
+		},
+		"StreamBuilder": {
+		  "prefix": "sni streamBuilder",
+		  "body": [
+			"StreamBuilder(",
+			"                stream: Stream.value(null),",
+			"                builder: (context, snapshot) {",
+			"                  if (snapshot.connectionState != ConnectionState.active) {",
+			"                    return const Center(child: CircularProgressIndicator());",
+			"                  }",
+			"",
+			"                  if (snapshot.hasError) {",
+			"                    return Text('Error: ${snapshot.error}');",
+			"                  }",
+			"",
+			"                  if (!snapshot.hasData) {",
+			"                    return const Text('No Project');",
+			"                  }",
+			"",
+			"                  final test = snapshot.data;",
+			"                  return const Text('Data: test');",
+			"                },",
+			"              )"
+		  ],
+		  "description": "StreamBuilder"
+		},
+		"Theme": {
+		  "prefix": "sni theme",
+		  "body": [
+			"final theme = Theme.of(context);",
+			"final colors = theme.colorScheme;",
+			"final typography = theme.textTheme;"
+		  ],
+		  "description": "Theme"
+		},
+		"Try catch": {
+			"prefix": "sni try catch",
+			"body": [
+				"try {",
+				"$1",
+				"} catch (e) {",
+				"print('${TM_FILENAME} 🔴${TM_LINE_NUMBER}: $$e');",
+				"await toast(e);",
+				"}"
+			],
+			"description": "sni try catch"
+		},
+		"New page": {
+			"prefix": "sni new page",
+			"body": [
+				"import 'package:flutter/material.dart';",
+				"",
+				"class ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g} extends StatelessWidget {",
+				"  const ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}({super.key});",
+				"",
+				"  @override",
+				"  Widget build(BuildContext context) {",
+				"    print('📱 build ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g} ');",
+				"    return Container($1);",
+				"  }",
+				"}"
+			],
+			"description": "New page"
+		},
+		"New class": {
+			"prefix": "sni new class",
+			"body": ["class ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g} {}",],
+			"description": "New class"
+		},
+		"New service": {
+			"prefix": "sni new service",
+			"body": [
+				"class ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g} {",
+				"  Future<void> _function() async {print('🛜 _function ');}",
+				"  Future<void> createCommand() async {print('🎮 createCommand ');}",
+				"  Future<void> readQuery() async {print('🔍 readQuery ');}",
+				"  Future<void> updateCommand() async {print('🎮 updateCommand ');}",
+				"  Future<void> deleteCommand() async {print('🎮 deleteCommand ');}",
+				"}"
+			],
+			"description": "New service"
+		},
+		"New model": {
+			"prefix": "sni new model",
+			"body": [
+				"import 'package:flutter/material.dart';",
+				"@immutable",
+				"class ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g} {",
+				"  const ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}({",
+				"    required this.test,",
+				"  });",
+				"  factory ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}.fromJson(Map<String, dynamic> json) {",
+				"    return ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}(",
+				"      test: json['test'] as String,",
+				"    );",
+				"  }",
+				"  final String test;",
+				"  Map<String, dynamic> toJson() => {",
+				"    'test': test,",
+				"  };",
+				"}"
+			],
+			"description": "New model"
+		},
+		"Riverpod When": {
+		  "prefix": "sni riverpod when",
+		  "body": [
+			"when(",
+			"          error: (error, stackTrace) => Text('Error $$error'),",
+			"          loading: () => const Center(child: CircularProgressIndicator()),",
+			"          data: (data) {",
+			"            return Text(data.toString());",
+			"          })"
+		  ],
+		  "description": "Riverpod When"
+		},
+		"Riverpod Repository": {
+		  "prefix": "sni riverpod repository",
+		  "body": [
+			"import 'package:riverpod_annotation/riverpod_annotation.dart';",
+			"",
+			"part '$TM_FILENAME_BASE.g.dart';",
+			"",
+			"@riverpod",
+			" ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}  ${TM_FILENAME_BASE/(.*)/${1:/camelCase}/g}(Ref ref) =>",
+			"     ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}(FirebaseFirestore.instance);",
+			"",
+			"class  ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g} {",
+			"  ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}(this._firestore);",
+			"  final FirebaseFirestore _firestore;",
+			"",
+			"  static String ${TM_FILENAME_BASE/_repository//}sPath({required String userId}) => 'users/$userId/';",
+			"",
+			"  CollectionReference<Model> _${TM_FILENAME_BASE/_repository//}sRef({",
+			"    required String userId,",
+			"  }) =>",
+			"      _firestore.collection(${TM_FILENAME_BASE/_repository//}sPath(userId)).withConverter(",
+			"            fromFirestore: (snapshot, _) =>",
+			"                Model.fromJson(snapshot.data()!),",
+			"            toFirestore: (data, _) => data.toJson(),",
+			"          );",
+			"",
+			"  DocumentReference<Model> _${TM_FILENAME_BASE/_repository//}DocRef({",
+			"    required String userId,",
+			"    required String ${TM_FILENAME_BASE/_repository//}Name,",
+			"  }) =>",
+			"      _${TM_FILENAME_BASE/_repository//}sRef(userId: userId).doc(${TM_FILENAME_BASE/_repository//}Name);",
+			"",
+			"  Future<void> create() async {",
+			"    print('🎮 create ');",
 			"  }",
-			"}"
-		],
-		"description": "New page"
-	},
-	"New fanc": {
-		"prefix": "new fanc",
-		"body": [
-			"  ${TM_FILENAME_BASE/(.*)/${1:/camelcase}/g}(){}",
-		],
-		"description": "New fanc"
-	},
-	"repository": {
-		"prefix": "new repository",
-		"body": [
-			"import 'package:cloud_firestore/cloud_firestore.dart';",
-			"import 'package:firebase_auth/firebase_auth.dart';",
-			"import 'package:flutter_riverpod/flutter_riverpod.dart';",
 			"",
-			"final ${TM_FILENAME_BASE/(.*)/${1:/camelcase}/g}Provider = Provider(",
-			"  (ref) => ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}(",
-			"    auth: FirebaseAuth.instance,",
-			"    firestore: FirebaseFirestore.instance,",
-			"  ),",
-			");",
+			"  Future<void> read() async {",
+			"    print('🔍 read ');",
+			"  }",
 			"",
-			"class ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g} {",
-			"  final FirebaseAuth auth;",
-			"  final FirebaseFirestore firestore;",
-			"  ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}({",
-			"    required this.auth,",
-			"    required this.firestore,",
-			"  });",
-			"}"
-		],
-		"description": "New repository"
-	},
-	//基本構文は${vscodeが設定した変数/正規表現で検索/検索した値を置き換える/正規表現オプション}
-	//${TM_FILENAME_BASE/_controller//}は。${現在のドキュメントのファイル名を拡張子なしで/_controllerを検索/削除/}
-	"controller": {
-		"prefix": "new controller",
-		"body": [
-			"import 'package:flutter_riverpod/flutter_riverpod.dart';",
+			"  Future<void> update() async {",
+			"    print('🎮 update ');",
+			"  }",
 			"",
-			"",
-			"final  ${TM_FILENAME_BASE/(.*)/${1:/camelcase}/g}Provider = Provider((ref) {",
-			"  return ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}(ref: ref);",
-			"});",
-			"",
-			"class ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g} {",
-			"  final ProviderRef ref;",
-			"",
-			"  ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}({",
-			"    required this.ref,",
-			"  });",
+			"  Future<void> delete() async {",
+			"    print('🎮 delete ');",
+			"  }",
 			"}",
 			""
-		],
-		"description": "New controller"
-	},
-}
+		  ],
+		  "description": "Riverpod Repository"
+		},
+		"State用Freezed": {
+		  "prefix": [
+			  "sni freezed state",
+		  ],
+		  "body": [
+			  "import 'package:freezed_annotation/freezed_annotation.dart';",
+			  "",
+			  "part '$TM_FILENAME_BASE.freezed.dart';",
+			  "",
+			  "@freezed",
+			  "class ${1:${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}} with _$${1} {",
+			  "  const factory ${1}({",
+			  "    required ${2:String id},",
+			  "  }) = _${1};",
+			  "}"
+		  ],
+		  "description": "Freezed State"
+	  },
+	  "Json用Freezed": {
+		  "prefix": [
+			  "sni freezed json",
+		  ],
+		  "body": [
+			  "import 'package:freezed_annotation/freezed_annotation.dart';",
+			  "",
+			  "part '$TM_FILENAME_BASE.freezed.dart';",
+			  "part '$TM_FILENAME_BASE.g.dart';",
+			  "",
+			  "@freezed",
+			  "class ${1:${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}} with _$${1} {",
+			  "  const factory ${1}({",
+			  "@Default('ここに初期値を入れれる') String name,",
+			  "    required ${2:String id},",
+			  "  }) = _${1};",
+			  "  ",
+			  "  factory ${1}.fromJson(Map<String, Object?> json) => _$${1}FromJson(json);",
+			  "}"
+		  ],
+		  "description": "Freezed Json"
+	  },
+	  "Generated Code": {
+		  "prefix": [
+			  "sni generated",
+		  ],
+		  "body": [
+			  "part '$TM_FILENAME_BASE.g.dart';",
+		  ],
+		  "description": "Generated Code"
+	  }
+	  }
+	  
+	  
+	  
+	  
+	  
+	  
+	  
