@@ -3,7 +3,6 @@
 # アプリのリスト
 apps=(
     google-chrome
-    iterm2
     cmd-eikana
     deepl
     notion
