@@ -12,6 +12,7 @@ apps=(
     visual-studio-code
     kindle
     displaylink
+    clipy
 )
 
 # 各アプリをインストール
